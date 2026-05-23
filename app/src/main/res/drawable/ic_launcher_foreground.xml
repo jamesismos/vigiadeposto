@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Background split: Verde (esquerda) e Amarelo (direita) -->
+    <path
+        android:fillColor="#007A4D"
+        android:pathData="M0,0 L54,0 L54,108 L0,108 Z"/>
+    
+    <path
+        android:fillColor="#FFB400"
+        android:pathData="M54,0 L108,0 L108,108 L54,108 Z"/>
+    
+    <!-- Bomba de combustível central (Azul petróleo) -->
+    <!-- Base/suporte da bomba -->
+    <path
+        android:fillColor="#004B7F"
+        android:pathData="M36,72 L36,82 L72,82 L72,72 Z"/>
+    
+    <!-- Corpo principal da bomba -->
+    <path
+        android:fillColor="#004B7F"
+        android:pathData="M42,30 L42,72 L66,72 L66,30 Z"/>
+    
+    <!-- Display/tela da bomba (Amarelo energia) -->
+    <path
+        android:fillColor="#FFB400"
+        android:pathData="M45,36 L45,50 L63,50 L63,36 Z"/>
+    
+    <!-- Mangueira/bico da bomba -->
+    <path
+        android:fillColor="#004B7F"
+        android:pathData="M66,42 L76,42 L76,46 L82,46 L82,50 L76,50 L76,54 L66,54 Z"/>
+    
+    <!-- Polegar para cima (Verde combustível) -->
+    <!-- Base do polegar/punho -->
+    <path
+        android:fillColor="#007A4D"
+        android:pathData="M22,58 L22,72 L32,72 L32,58 Z"/>
+    
+    <!-- Polegar levantado -->
+    <path
+        android:fillColor="#007A4D"
+        android:pathData="M24,42 L24,58 L30,58 L30,50 L28,48 L28,44 L30,42 L32,44 L32,48 L30,50 L30,42 Z"/>
+    
+    <!-- Detalhes e acabamentos -->
+    <!-- Botão/indicador no display (círculo como retângulo pequeno) -->
+    <path
+        android:fillColor="#004B7F"
+        android:pathData="M52,43 L52,47 L56,47 L56,43 Z"/>
+    
+    <!-- Indicador de status (vermelho alerta - círculo como quadrado pequeno) -->
+    <path
+        android:fillColor="#D72638"
+        android:pathData="M76,33 L76,37 L80,37 L80,33 Z"/>
+    
+    <!-- Detalhe no polegar -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M25,46 L25,50 L29,50 L29,46 Z"/>
+
+</vector>

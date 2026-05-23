@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Gradiente de fundo com cores da marca -->
+    <path
+        android:fillColor="#F2F2F2"
+        android:pathData="M0,0h108v108h-108z"/>
+        
+    <!-- Círculos decorativos sutis -->
+    <path
+        android:fillColor="#004B7F"
+        android:fillAlpha="0.1"
+        android:pathData="M20,20
+            a15,15 0 1,1 0,30
+            a15,15 0 1,1 0,-30z" />
+            
+    <path
+        android:fillColor="#007A4D"
+        android:fillAlpha="0.08"
+        android:pathData="M70,60
+            a20,20 0 1,1 0,40
+            a20,20 0 1,1 0,-40z" />
+            
+    <path
+        android:fillColor="#FFB400"
+        android:fillAlpha="0.12"
+        android:pathData="M80,10
+            a12,12 0 1,1 0,24
+            a12,12 0 1,1 0,-24z" />
+</vector>

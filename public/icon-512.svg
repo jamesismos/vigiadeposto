@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Vigia de Posto">
+  <rect width="512" height="512" rx="112" fill="#075f68"/>
+  <path d="M146 382V164c0-33 27-60 60-60h100c33 0 60 27 60 60v218" fill="#f6f8fa"/>
+  <path d="M198 163h116v91H198z" fill="#10151f"/>
+  <path d="M366 194h43c19 0 34 15 34 34v101c0 24-20 44-44 44h-33v-49h31v-83h-31z" fill="#a7c957"/>
+  <circle cx="256" cy="330" r="54" fill="#a7c957"/>
+  <path d="M229 330l19 19 40-45" fill="none" stroke="#10151f" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

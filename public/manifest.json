@@ -1,0 +1,41 @@
+{
+  "name": "Vigia de Posto",
+  "short_name": "Vigia",
+  "description": "Observatório colaborativo de postos de combustível no Brasil.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#10151f",
+  "theme_color": "#075f68",
+  "categories": ["navigation", "utilities", "travel"],
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Relatar preço",
+      "short_name": "Preço",
+      "description": "Informar preço ou experiência",
+      "url": "/#relatar"
+    },
+    {
+      "name": "Abrir mapa",
+      "short_name": "Mapa",
+      "description": "Ver postos próximos",
+      "url": "/#mapa"
+    }
+  ]
+}

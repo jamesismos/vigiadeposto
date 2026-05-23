@@ -1,0 +1,44 @@
+{
+  "positivo": [
+    "Excelente atendimento",
+    "Combustível de qualidade",
+    "Preço justo",
+    "Local limpo e organizado",
+    "Funcionários educados",
+    "Abastecimento rápido",
+    "Localização conveniente",
+    "Banheiro disponível",
+    "Ar e água disponíveis",
+    "Segurança razoável",
+    "Bom local, mas pouco espaço",
+    "Abastecimento correto, atendimento frio",
+    "Serviço varia conforme o turno"
+  ],
+  "negativo": [
+    "Gasolina ruim",
+    "Atendimento péssimo",
+    "Preço abusivo",
+    "Local sujo e mal cuidado",
+    "Funcionários grosseiros",
+    "Demora excessiva",
+    "Difícil acesso",
+    "Banheiro indisponível",
+    "Sem ar e água",
+    "Inseguro",
+    "Combustível adulterado",
+    "Fila muito grande",
+    "Equipamentos quebrados"
+  ],
+  "intermediario": [
+    "Preço um pouco acima da média",
+    "Atendimento demorado, mas educado",
+    "Banheiro disponível, porém mal cuidado",
+    "Loja de conveniência pequena",
+    "Poucas opções de pagamento",
+    "Ar e água disponíveis, porém ruins",
+    "Segurança razoável",
+    "Bom local, mas pouco espaço",
+    "Abastecimento correto, atendimento frio",
+    "Serviço varia conforme o turno"
+  ]
+}

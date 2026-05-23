@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Regras para usuários
+    match /usuarios/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Regras para postos
+    match /postos/{postoId} {
+      allow read: if true; // Qualquer um pode ler postos
+      allow create: if request.auth != null; // Usuário logado pode criar
+      allow update: if request.auth != null && 
+        (request.auth.uid == resource.data.criadoPor || 
+         request.auth.token.admin == true); // Criador ou admin pode editar
+      allow delete: if request.auth != null && 
+        request.auth.uid == resource.data.criadoPor; // Apenas criador pode deletar
+    }
+    
+    // Regras para avaliações
+    match /avaliacoes/{avaliacaoId} {
+      allow read: if true; // Qualquer um pode ler avaliações
+      allow create: if request.auth != null; // Usuário logado pode criar
+      allow update: if request.auth != null && 
+        request.auth.uid == resource.data.usuarioId; // Apenas autor pode editar
+      allow delete: if request.auth != null && 
+        request.auth.uid == resource.data.usuarioId; // Apenas autor pode deletar
+    }
+    
+    // Regras para respostas rápidas: leitura pública + escrita apenas por admin
+    match /respostas/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Regras para estatísticas (se necessário)
+    match /estatisticas/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+  }
+}

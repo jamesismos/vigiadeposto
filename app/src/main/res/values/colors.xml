@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Cores básicas -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    
+    <!-- Cores principais do app Vigia de Posto -->
+    <color name="blue_petroleo">#004B7F</color>
+    <color name="green_combustivel">#007A4D</color>
+    <color name="yellow_energia">#FFB400</color>
+    <color name="red_alerta">#D72638</color>
+    <color name="gray_light">#F2F2F2</color>
+    
+    <!-- Cores do Material Design -->
+    <color name="primary">#004B7F</color>
+    <color name="primary_variant">#003366</color>
+    <color name="secondary">#007A4D</color>
+    <color name="secondary_variant">#005A3A</color>
+    <color name="tertiary">#FFB400</color>
+    <color name="background">#FAFAFA</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F8F9FA</color>
+    <color name="error">#D72638</color>
+    
+    <!-- Cores de texto -->
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="on_tertiary">#000000</color>
+    <color name="on_background">#1A1A1A</color>
+    <color name="on_surface">#1A1A1A</color>
+    <color name="on_surface_variant">#666666</color>
+    <color name="on_error">#FFFFFF</color>
+    
+    <!-- Cores faltantes referenciadas pelo tema -->
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    
+    <!-- Cor de fundo do ícone do app -->
+    <color name="ic_launcher_background">#F2F2F2</color>
+</resources>
