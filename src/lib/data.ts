@@ -16,6 +16,11 @@ import {
 
 export type StationStatus = "recommended" | "cheap" | "expensive" | "alert";
 
+export interface StationCoordinate {
+  lat: number;
+  lng: number;
+}
+
 export const nationalStats = [
   { label: "postos monitorados", value: "42.860", detail: "+18 estados" },
   { label: "preços enviados hoje", value: "128.420", detail: "validados por reputação" },
@@ -37,6 +42,8 @@ export const stations = [
     flag: "Shell",
     city: "São Paulo, SP",
     address: "Av. Brasil, 2140 - Jardim América",
+    lat: -23.5687,
+    lng: -46.6803,
     score: 4.7,
     status: "recommended" as StationStatus,
     price: "R$ 5,69",
@@ -52,6 +59,8 @@ export const stations = [
     flag: "Ipiranga",
     city: "Curitiba, PR",
     address: "BR-116, km 102",
+    lat: -25.4809,
+    lng: -49.3044,
     score: 4.2,
     status: "cheap" as StationStatus,
     price: "R$ 3,61",
@@ -67,6 +76,8 @@ export const stations = [
     flag: "Bandeira branca",
     city: "Goiânia, GO",
     address: "Av. Anhanguera, 510",
+    lat: -16.6809,
+    lng: -49.2533,
     score: 2.8,
     status: "alert" as StationStatus,
     price: "R$ 6,42",

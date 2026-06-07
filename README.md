@@ -1,96 +1,55 @@
 # Vigia de Posto
 
-WebApp/PWA moderno para transparência, fiscalização cidadã e monitoramento colaborativo de postos de combustível no Brasil.
+**by JAMESYSTEM**
 
-O projeto preserva o app Android existente e adiciona uma versão web em Next.js 15 preparada para Vercel, Supabase, Mapbox e instalação como aplicativo.
+WebApp/PWA open source e comunitário para transparência, fiscalização cidadã e monitoramento colaborativo de postos de combustível no Brasil.
 
-## Experiência
+> **Status:** Público, open source, sem custo por visualização de mapa, 100% baseado em OpenStreetMap.
 
-- Home institucional com busca, estatísticas nacionais, preço médio do dia e CTA de instalação PWA.
+## Filosofia
+
+- **Privacidade primeiro.** Sem rastreamento de local sem consentimento explícito.
+- **Sem anúncios invasivos.** Monetização só quando fizer sentido para o ecossistema.
+- **Dados abertos.** Contribuições alimentam a comunidade, não corporações.
+- **Segurança jurídica.** Nenhum texto livre é publicado sem moderação. Avaliações estruturadas primeiro.
+- **Acessível.** PWA leve, offline parcial, gratuito para todos.
+
+## O que resolve
+
+1. Usuário não sabe se o preço do combustível está justo.
+2. Mulheres e famílias buscam postos seguros para parar em estradas.
+3. Cidadão quer denunciar adulteração sem expor sua identidade.
+4. Faltam dados confiáveis, em tempo real e de fonte comunitária.
+
+## Experiência Principal
+
+- Home com busca, estatísticas nacionais e CTA de instalação PWA.
 - Mapa colaborativo com filtros por gasolina, etanol, diesel, GNV e elétrico.
-- Perfil de posto com reputação, preço, comparação estadual, ANP/Petrobras e indicadores de segurança.
-- Relato de experiência com denúncia, elogio, informação e atualização de preço.
+- Perfil de posto com reputação, preço, comparação estadual e indicadores de segurança.
+- Relato estruturado: denúncia, elogio, informação e atualização de preço.
 - Publicação anônima mesmo para usuário logado.
 - Indicadores de segurança feminina, família, banheiro, acessibilidade e parada segura.
 - Dashboard admin para moderação, denúncias, heatmap, abuso e relatórios.
-- Seção "Ajude o Projeto" com PIX e Bitcoin.
 
-## Stack Web
+## Stack Gratuita e Open Source
 
-- Next.js 15, React, TypeScript e TailwindCSS.
-- Framer Motion, lucide-react e Mapbox GL.
-- Supabase Auth, PostgreSQL, RLS e Storage.
-- Vercel para deploy.
-- PWA com `manifest.json`, service worker, splash e offline parcial.
+| Camada | Tecnologia | Custo |
+|--------|-----------|-------|
+| Frontend | Next.js 15, React, TypeScript, TailwindCSS | Gratuito |
+| PWA | `manifest.json`, service worker, splash, offline parcial | Gratuito |
+| Mapa | OpenStreetMap + MapLibre GL JS | Gratuito |
+| Geocodificação | Nominatim | Gratuito |
+| Backend | Supabase Free (PostgreSQL, Auth, RLS) | Gratuito |
+| Deploy | Vercel Free | Gratuito |
+| Analytics | Plausible Analytics self-host ou Umami | Gratuito |
+| Monitoramento | Sentry Free | Gratuito |
 
-## Como Rodar
+### O que foi removido
 
-```bash
-npm install
-npm run dev
-```
+- **Mapbox** → substituído por MapLibre GL JS + OpenStreetMap.
+- **Google Maps** → eliminado. Sem dependência comercial de mapas.
 
-Acesse `http://localhost:3000`.
-
-## Variáveis de Ambiente
-
-Copie `.env.example` para `.env.local` e preencha:
-
-```bash
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-NEXT_PUBLIC_MAPBOX_TOKEN=
-NEXT_PUBLIC_ADSENSE_CLIENT=ca-pub-3090285265842642
-NEXT_PUBLIC_SITE_URL=https://seu-projeto.vercel.app
-```
-
-## Deploy Vercel
-
-1. Importe este repositório na Vercel.
-2. Configure o framework como Next.js.
-3. Adicione as variáveis de ambiente.
-4. Rode o deploy.
-5. Aponte o domínio para o deployment ativo.
-
-O erro `DEPLOYMENT_NOT_FOUND` indica que o domínio está apontando para um deployment inexistente/removido ou para um projeto Vercel sem build ativo. Um novo deploy a partir desta raiz resolve a base do problema.
-
-## Banco Supabase
-
-O schema inicial está em:
-
-```bash
-supabase/migrations/001_initial_schema.sql
-```
-
-Inclui:
-
-- `users`
-- `fuel_stations`
-- `fuel_prices`
-- `reviews`
-- `reports`
-- `moderation_logs`
-- `ratings`
-- `favorites`
-- `admins`
-- `regional_fuel_indicators`
-
-Rode a migration no Supabase SQL Editor ou via Supabase CLI.
-
-## Segurança
-
-- Row Level Security ativo em todas as tabelas.
-- Políticas separadas para leitura pública, criação autenticada e moderação admin.
-- Headers contra clickjacking, sniffing e abuso de permissões.
-- Dados anônimos ocultam identidade publicamente, mantendo trilha de auditoria.
-- Preparado para CAPTCHA invisível, rate limiting, anti-spam e moderação automática.
-
-## Arquitetura e Wireframes
-
-- [Arquitetura](docs/ARCHITECTURE.md)
-- [Wireframes](docs/WIREFRAMES.md)
-
-## Estrutura Web
+## Estrutura do Projeto
 
 ```text
 src/
@@ -108,15 +67,71 @@ public/
 supabase/
   migrations/
 docs/
+  ARCHITECTURE.md
+  WIREFRAMES.md
+  MIGRACAO_OPENSTREETMAP.md
 ```
 
-## Monetização Futura
+## Como Rodar
 
-- anúncios discretos;
-- postos patrocinados;
-- analytics premium;
-- relatórios regionais;
-- ranking premium;
-- API paga.
+```bash
+npm install
+npm run dev
+```
 
-AdSense preparado: `ca-pub-3090285265842642`.
+Acesse `http://localhost:3000`.
+
+## Variáveis de Ambiente
+
+Copie `.env.example` para `.env.local`:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SITE_URL=https://seu-projeto.vercel.app
+```
+
+> Não há mais token de mapa comercial. MapLibre usa tiles livres do OpenStreetMap.
+
+## Deploy Vercel
+
+1. Importe este repositório na Vercel.
+2. Configure o framework como Next.js.
+3. Adicione as variáveis de ambiente.
+4. Rode o deploy.
+5. Aponte o domínio para o deployment ativo.
+
+## Banco Supabase
+
+O schema inicial está em:
+
+```bash
+supabase/migrations/001_initial_schema.sql
+```
+
+Inclui: `users`, `fuel_stations`, `fuel_prices`, `reviews`, `reports`, `moderation_logs`, `ratings`, `favorites`, `admins`, `regional_fuel_indicators`.
+
+Rode a migration no Supabase SQL Editor ou via Supabase CLI.
+
+## Segurança e LGPD
+
+- Row Level Security ativo em todas as tabelas.
+- Políticas separadas para leitura pública, criação autenticada e moderação admin.
+- Headers contra clickjacking, sniffing e abuso de permissões.
+- Dados anônimos ocultam identidade publicamente, mantendo trilha de auditoria.
+- Preparado para CAPTCHA invisível, rate limiting, anti-spam e moderação automática.
+- **Nenhum texto livre aparece sem moderação.** Avaliações estruturadas (estrelas, sim/não) são publicadas imediatamente. Comentários entram em fila de moderação.
+
+## Documentação
+
+- [Arquitetura](docs/ARCHITECTURE.md)
+- [Wireframes](docs/WIREFRAMES.md)
+- [Migração OpenStreetMap](docs/MIGRACAO_OPENSTREETMAP.md)
+
+## Licença
+
+MIT - Vigia de Posto by JAMESYSTEM.
+
+---
+
+**by JAMESYSTEM**

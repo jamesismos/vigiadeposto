@@ -1,17 +1,84 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import maplibregl from "maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
 import { LocateFixed, MapPin, ShieldCheck } from "lucide-react";
 import { filters, stations } from "@/lib/data";
 
-const markerPosition = [
-  "left-[20%] top-[34%]",
-  "left-[58%] top-[22%]",
-  "left-[71%] top-[58%]"
-];
-
 export function MapPreview() {
+  const container = useRef<HTMLDivElement>(null);
+  const map = useRef<maplibregl.Map | null>(null);
+  const markers = useRef<maplibregl.Marker[]>([]);
   const [activeFilter, setActiveFilter] = useState("gasolina");
+  const [ready, setReady] = useState(false);
+
+  const fly = useCallback((lat: number, lng: number) => {
+    map.current?.flyTo({ center: [lng, lat], zoom: 13, duration: 1200 });
+  }, []);
+
+  useEffect(() => {
+    if (!container.current || map.current) return;
+
+    const m = new maplibregl.Map({
+      container: container.current,
+      attributionControl: { compact: true },
+      style: {
+        version: 8,
+        sources: {
+          osm: {
+            type: "raster",
+            tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+            tileSize: 256,
+            attribution: "&copy; OpenStreetMap contributors"
+          }
+        },
+        layers: [{ id: "osm", type: "raster", source: "osm" }]
+      },
+      center: [-49, -18.5],
+      zoom: 4.5
+    });
+
+    m.on("load", () => setReady(true));
+    map.current = m;
+
+    return () => {
+      markers.current.forEach((mk) => mk.remove());
+      markers.current = [];
+      m.remove();
+      map.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!map.current || !ready) return;
+
+    markers.current.forEach((mk) => mk.remove());
+    markers.current = [];
+
+    stations.forEach((s) => {
+      if (s.lat === undefined || s.lng === undefined) return;
+
+      const el = document.createElement("div");
+      el.className = "station-marker";
+      el.title = s.name;
+      const bg = s.status === "alert" ? "#dc2626" : s.status === "cheap" ? "#076058" : "#a7c957";
+      el.innerHTML = `<div style="
+        background:${bg};color:white;padding:2px 10px;border-radius:999px;
+        font-weight:700;font-size:11px;white-space:nowrap;cursor:pointer;
+        box-shadow:0 2px 8px rgba(0,0,0,0.25);border:2px solid white;
+        transform:translate(-50%,-100%)
+      ">${s.price}</div>`;
+
+      el.addEventListener("click", () => fly(s.lat, s.lng));
+
+      const marker = new maplibregl.Marker({ element: el })
+        .setLngLat([s.lng, s.lat])
+        .addTo(map.current!);
+
+      markers.current.push(marker);
+    });
+  }, [ready, fly]);
 
   return (
     <section id="mapa" className="bg-[#f6f8fa] py-16 text-ink dark:bg-[#10151f] dark:text-white">
@@ -23,7 +90,7 @@ export function MapPreview() {
             </p>
             <h2 className="mt-3 text-3xl font-bold md:text-4xl">Postos, preços e riscos no mesmo painel.</h2>
             <p className="mt-4 text-base leading-relaxed text-graphite dark:text-white/70">
-              Preparado para Mapbox com clusterização, heatmap, busca por cidade, bairro e rodovia.
+              Mapa gratuito com OpenStreetMap + MapLibre. Sem custo por visualizacao.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -42,17 +109,21 @@ export function MapPreview() {
             ))}
           </div>
           <div className="grid gap-3">
-            {stations.map((station) => (
-              <article key={station.id} className="rounded-lg border border-ink/10 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+            {stations.map((s) => (
+              <article
+                key={s.id}
+                onClick={() => fly(s.lat, s.lng)}
+                className="cursor-pointer rounded-lg border border-ink/10 bg-white p-4 shadow-sm transition hover:border-petrol/50 dark:border-white/10 dark:bg-white/5"
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="font-bold">{station.name}</h3>
-                    <p className="mt-1 text-sm text-graphite dark:text-white/60">{station.city} · {station.distance}</p>
+                    <h3 className="font-bold">{s.name}</h3>
+                    <p className="mt-1 text-sm text-graphite dark:text-white/60">{s.city} · {s.distance}</p>
                   </div>
-                  <span className="rounded-md bg-limefuel/25 px-2 py-1 text-sm font-bold text-petrol dark:text-limefuel">{station.score}</span>
+                  <span className="rounded-md bg-limefuel/25 px-2 py-1 text-sm font-bold text-petrol dark:text-limefuel">{s.score}</span>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {station.tags.map((tag) => (
+                  {s.tags.map((tag) => (
                     <span key={tag} className="rounded-md bg-mist px-2 py-1 text-xs font-semibold text-graphite dark:bg-white/10 dark:text-white/75">
                       {tag}
                     </span>
@@ -62,35 +133,22 @@ export function MapPreview() {
             ))}
           </div>
         </div>
-        <div className="relative min-h-[520px] overflow-hidden rounded-lg border border-ink/10 bg-[#dce8e6] shadow-soft dark:border-white/10 dark:bg-[#18222b]">
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,95,104,0.12)_1px,transparent_1px),linear-gradient(rgba(7,95,104,0.12)_1px,transparent_1px)] bg-[size:48px_48px]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_35%,rgba(167,201,87,0.35),transparent_20%),radial-gradient(circle_at_70%_62%,rgba(214,69,69,0.24),transparent_17%)]" />
-          <div className="absolute left-6 top-6 flex items-center gap-2 rounded-md bg-white/90 px-3 py-2 text-sm font-bold text-ink shadow-soft">
+        <div className="relative min-h-[520px] overflow-hidden rounded-lg border border-ink/10 shadow-soft dark:border-white/10">
+          <div ref={container} className="absolute inset-0" />
+          <div className="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-md bg-white/90 px-3 py-2 text-sm font-bold text-ink shadow-soft">
             <LocateFixed size={16} />
-            São Paulo · {activeFilter}
+            Brasil · {activeFilter}
           </div>
-          {stations.map((station, index) => (
-            <div key={station.id} className={`absolute ${markerPosition[index]} w-56 rounded-lg bg-white p-3 shadow-soft dark:bg-[#111923]`}>
-              <div className="flex items-center gap-2">
-                <span className={`flex h-9 w-9 items-center justify-center rounded-md text-white ${
-                  station.status === "alert" ? "bg-danger" : station.status === "cheap" ? "bg-petrol" : "bg-limefuel text-ink"
-                }`}>
-                  <MapPin size={18} />
-                </span>
-                <div>
-                  <p className="text-sm font-bold text-ink dark:text-white">{station.price}</p>
-                  <p className="text-xs text-graphite dark:text-white/60">{station.comparison}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-          <div className="absolute bottom-5 left-5 right-5 grid gap-3 rounded-lg bg-white/92 p-4 shadow-soft backdrop-blur dark:bg-[#111923]/92 sm:grid-cols-3">
+          <div className="absolute bottom-4 left-4 right-4 z-10 grid gap-3 rounded-lg bg-white/92 p-4 shadow-soft backdrop-blur dark:bg-[#111923]/92 sm:grid-cols-3">
             {["barato", "recomendado", "suspeito"].map((item) => (
               <div key={item} className="flex items-center gap-2 text-sm font-semibold text-ink dark:text-white">
                 <ShieldCheck className="h-4 w-4 text-petrol dark:text-limefuel" />
                 {item}
               </div>
             ))}
+          </div>
+          <div className="absolute bottom-2 right-3 z-10 text-[10px] text-white/50">
+            &copy; OpenStreetMap contributors
           </div>
         </div>
       </div>
