@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Vigia de Posto | Observatório colaborativo de combustíveis",
+  title: "Vigia de Posto | Preco, seguranca e qualidade de postos",
   description:
-    "WebApp/PWA para transparência, fiscalização cidadã e reputação colaborativa de postos de combustível no Brasil.",
+    "Consulte precos, reputacao e seguranca de postos de combustivel no Brasil. Mapa gratuito, anonimo, sem anuncios.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <ServiceWorkerRegister />
         {children}
+        <Analytics />
       </body>
     </html>
   );

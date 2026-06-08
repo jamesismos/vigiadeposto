@@ -71,7 +71,7 @@ export default async function Home() {
             <span>
               <strong className="block text-base">Vigia de Posto</strong>
               <span className="text-xs font-semibold uppercase tracking-[0.16em] text-petrol dark:text-limefuel">
-                observatório cidadão
+                by JAMESYSTEM
               </span>
             </span>
           </Link>
@@ -93,13 +93,13 @@ export default async function Home() {
           <div className="flex min-h-[560px] flex-col justify-center">
             <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-md border border-white/15 bg-white/10 px-3 py-2 text-sm font-semibold backdrop-blur">
               <Sparkles size={16} className="text-limefuel" />
-              Transparência, reputação e preço justo em todo o Brasil
+              Preco, seguranca e qualidade de postos no Brasil
             </div>
             <h1 className="max-w-4xl text-4xl font-black leading-tight md:text-6xl">
               Vigia de Posto
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/82">
-              Uma plataforma séria para motoristas acompanharem preços, reputação, segurança e relatos sobre postos de combustível sem virar rede social.
+              Consulte precos, reputacao e seguranca de postos de combustivel. Envie avaliacoes, denuncie problemas. Sem rede social.
             </p>
             <div className="mt-8 grid max-w-2xl gap-3 rounded-lg border border-white/15 bg-white/10 p-2 backdrop-blur sm:grid-cols-[1fr_auto]">
               <label className="flex items-center gap-3 rounded-md bg-white px-4 py-3 text-ink">
@@ -163,7 +163,7 @@ export default async function Home() {
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-petrol dark:text-limefuel">
             perfil do posto
           </p>
-          <h2 className="mt-3 text-3xl font-bold md:text-4xl">Reputação objetiva, preço contextualizado e histórico claro.</h2>
+          <h2 className="mt-3 text-3xl font-bold md:text-4xl">Reputacao, preco e historico.</h2>
           {hasData ? (
             <div className="mt-6 rounded-lg border border-ink/10 bg-white p-5 shadow-soft dark:border-white/10 dark:bg-white/5">
               <div className="flex flex-wrap items-start justify-between gap-4">
@@ -253,9 +253,9 @@ export default async function Home() {
         <div className="mx-auto grid max-w-7xl gap-8 px-5 lg:grid-cols-[1fr_0.8fr]">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-limefuel">ajude o projeto</p>
-            <h2 className="mt-3 text-3xl font-bold md:text-4xl">Financie um observatório independente.</h2>
+            <h2 className="mt-3 text-3xl font-bold md:text-4xl">Ajude a manter o app no ar.</h2>
             <p className="mt-4 max-w-2xl leading-relaxed text-white/72">
-              Doações ajudam com infraestrutura, dados, moderação, auditoria e evolução do app sem comprometer a experiência.
+              Infraestrutura, dados, moderacao e evolucao do app sem comprometer a experiencia.
             </p>
             <div className="mt-6 grid gap-3">
               <DonationLine label="PIX" value="c23396a1-9c0e-4795-919e-d48e528074f2" />

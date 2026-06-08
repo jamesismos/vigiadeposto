@@ -103,6 +103,9 @@ pnpm-debug.log*
 .env
 .env*.local
 
+# JAMESYSTEM internal
+README_DEV.md
+
 # JAMESYSTEM internal governance (metodologia privada)
 PROJECT_VISION.md
 PRODUCT_MEMORY.md

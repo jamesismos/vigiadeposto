@@ -123,7 +123,7 @@ export function MapPreview() {
         <div className="space-y-6">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-petrol dark:text-limefuel">
-              mapa colaborativo
+              mapa
             </p>
             <h2 className="mt-3 text-3xl font-bold md:text-4xl">Postos, preços e riscos no mesmo painel.</h2>
             <p className="mt-4 text-base leading-relaxed text-graphite dark:text-white/70">
