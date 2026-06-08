@@ -1,19 +1,53 @@
 import Link from "next/link";
 import { ArrowLeft, BarChart3, CheckCircle2, Flame, Map, ShieldCheck } from "lucide-react";
-import { adminCards, moderationQueue } from "@/lib/data";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
-const heatmapStates = [
-  ["SP", 84],
-  ["MG", 72],
-  ["RJ", 68],
-  ["PR", 62],
-  ["BA", 51],
-  ["GO", 49],
-  ["PE", 43],
-  ["RS", 39]
-];
+export default async function AdminDashboard() {
+  const cookieStore = cookies();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { cookies: { getAll: async () => (await cookieStore).getAll() } }
+  );
 
-export default function AdminDashboard() {
+  const [
+    { count: complaints },
+    { count: suspicious },
+    { count: approved },
+    { count: observing },
+    { data: queue },
+  ] = await Promise.all([
+    supabase.from("reports").select("*", { count: "exact", head: true }).eq("status", "pending"),
+    supabase.from("reports").select("*", { count: "exact", head: true }).eq("risk", "high"),
+    supabase.from("reviews").select("*", { count: "exact", head: true }).eq("status", "approved"),
+    supabase.from("fuel_stations").select("*", { count: "exact", head: true }).eq("status", "under_review"),
+    supabase
+      .from("reports")
+      .select("id, type, risk, created_at")
+      .eq("status", "pending")
+      .order("created_at", { ascending: false })
+      .limit(5),
+  ]);
+
+  const cards = [
+    { label: "denúncias pendentes", value: complaints ?? 0, icon: Flame, tone: "danger" },
+    { label: "preços suspeitos", value: suspicious ?? 0, icon: Flame, tone: "warning" },
+    { label: "revisões aprovadas", value: approved ?? 0, icon: CheckCircle2, tone: "petrol" },
+    { label: "postos em observação", value: observing ?? 0, icon: ShieldCheck, tone: "civic" },
+  ];
+
+  const heatmap = [
+    ["SP", 84],
+    ["MG", 72],
+    ["RJ", 68],
+    ["PR", 62],
+    ["BA", 51],
+    ["GO", 49],
+    ["PE", 43],
+    ["RS", 39],
+  ];
+
   return (
     <main className="min-h-screen bg-[#f6f8fa] text-ink dark:bg-[#10151f] dark:text-white">
       <header className="border-b border-ink/10 bg-white dark:border-white/10 dark:bg-white/5">
@@ -41,7 +75,7 @@ export default function AdminDashboard() {
         </div>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {adminCards.map((card) => (
+          {cards.map((card) => (
             <article key={card.label} className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/5">
               <card.icon className="h-7 w-7 text-petrol dark:text-limefuel" />
               <p className="mt-4 text-3xl font-black">{card.value}</p>
@@ -57,9 +91,9 @@ export default function AdminDashboard() {
               <h2 className="text-2xl font-bold">Heatmap nacional</h2>
             </div>
             <div className="mt-6 grid gap-3">
-              {heatmapStates.map(([state, value]) => (
-                <div key={state} className="grid grid-cols-[44px_1fr_48px] items-center gap-3">
-                  <span className="font-black">{state}</span>
+              {heatmap.map(([state, value]) => (
+                <div key={state as string} className="grid grid-cols-[44px_1fr_48px] items-center gap-3">
+                  <span className="font-black">{state as string}</span>
                   <div className="h-4 overflow-hidden rounded-md bg-mist dark:bg-white/10">
                     <div className="h-full rounded-md bg-petrol dark:bg-limefuel" style={{ width: `${value}%` }} />
                   </div>
@@ -75,18 +109,19 @@ export default function AdminDashboard() {
               <h2 className="text-2xl font-bold">Fila de risco</h2>
             </div>
             <div className="mt-6 grid gap-4">
-              {moderationQueue.map((item) => (
-                <article key={item.title} className="rounded-lg border border-ink/10 p-4 dark:border-white/10">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="font-bold">{item.title}</h3>
-                    <span className="rounded-md bg-danger/10 px-2 py-1 text-xs font-black uppercase text-danger">
-                      {item.risk}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-sm font-semibold text-petrol dark:text-limefuel">{item.location}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-graphite dark:text-white/65">{item.evidence}</p>
-                </article>
-              ))}
+              {queue && queue.length > 0 ? (
+                queue.map((item: any) => (
+                  <article key={item.id} className="rounded-lg border border-ink/10 p-4 dark:border-white/10">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="font-bold">{item.type}</h3>
+                      <span className="rounded-md bg-danger/10 px-2 py-1 text-xs font-black uppercase text-danger">{item.risk}</span>
+                    </div>
+                    <p className="mt-2 text-sm font-semibold text-petrol dark:text-limefuel">Criado em {new Date(item.created_at).toLocaleDateString("pt-BR")}</p>
+                  </article>
+                ))
+              ) : (
+                <p className="text-sm text-graphite dark:text-white/60">Fila vazia. Sem denúncias pendentes.</p>
+              )}
             </div>
           </section>
         </div>

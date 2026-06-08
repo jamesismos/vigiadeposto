@@ -1,117 +1,113 @@
-import {
-  Baby,
-  BadgeCheck,
-  Bath,
-  Car,
-  CircleDollarSign,
-  Droplets,
-  Fuel,
-  Lightbulb,
-  ShieldCheck,
-  Siren,
-  TrendingDown,
-  TrendingUp,
-  Users
-} from "lucide-react";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 export type StationStatus = "recommended" | "cheap" | "expensive" | "alert";
 
-export interface StationCoordinate {
+export interface Station {
+  id: string;
+  name: string;
+  flag: string | null;
+  address: string;
+  city: string;
+  state: string;
   lat: number;
   lng: number;
+  reputation_score: number;
+  safety_score: number;
+  family_score: number;
+  complaint_index: number;
+  status: string;
 }
-
-export const nationalStats = [
-  { label: "postos monitorados", value: "42.860", detail: "+18 estados" },
-  { label: "preços enviados hoje", value: "128.420", detail: "validados por reputação" },
-  { label: "relatos moderados", value: "9.314", detail: "fraude, abuso e segurança" },
-  { label: "índice confiável", value: "86%", detail: "baseado em recorrência" }
-];
-
-export const fuelAverages = [
-  { fuel: "Gasolina", price: "R$ 5,82", delta: "+1,9%", state: "BR", trend: TrendingUp },
-  { fuel: "Etanol", price: "R$ 3,74", delta: "-0,8%", state: "SP", trend: TrendingDown },
-  { fuel: "Diesel S10", price: "R$ 6,11", delta: "+0,4%", state: "MG", trend: TrendingUp },
-  { fuel: "GNV", price: "R$ 4,88", delta: "estável", state: "RJ", trend: CircleDollarSign }
-];
-
-export const stations = [
-  {
-    id: "posto-avenida-brasil",
-    name: "Posto Avenida Brasil",
-    flag: "Shell",
-    city: "São Paulo, SP",
-    address: "Av. Brasil, 2140 - Jardim América",
-    lat: -23.5687,
-    lng: -46.6803,
-    score: 4.7,
-    status: "recommended" as StationStatus,
-    price: "R$ 5,69",
-    fuel: "Gasolina",
-    distance: "1,8 km",
-    tags: ["seguro para mulheres", "banheiro bom", "preço justo"],
-    comparison: "-2,2% vs média SP",
-    nightSafe: true
-  },
-  {
-    id: "posto-rodovia-116",
-    name: "Auto Posto Rodovia 116",
-    flag: "Ipiranga",
-    city: "Curitiba, PR",
-    address: "BR-116, km 102",
-    lat: -25.4809,
-    lng: -49.3044,
-    score: 4.2,
-    status: "cheap" as StationStatus,
-    price: "R$ 3,61",
-    fuel: "Etanol",
-    distance: "8,4 km",
-    tags: ["barato", "ducha", "estacionamento"],
-    comparison: "-4,8% vs média PR",
-    nightSafe: true
-  },
-  {
-    id: "posto-centro-norte",
-    name: "Posto Centro Norte",
-    flag: "Bandeira branca",
-    city: "Goiânia, GO",
-    address: "Av. Anhanguera, 510",
-    lat: -16.6809,
-    lng: -49.2533,
-    score: 2.8,
-    status: "alert" as StationStatus,
-    price: "R$ 6,42",
-    fuel: "Gasolina",
-    distance: "3,2 km",
-    tags: ["relatos de falha", "preço acima", "moderação ativa"],
-    comparison: "+9,6% vs média GO",
-    nightSafe: false
-  }
-];
 
 export const filters = ["gasolina", "etanol", "diesel", "gnv", "elétrico"];
 
-export const ratingSignals = [
-  { label: "combustível confiável", icon: Fuel },
-  { label: "banheiro limpo", icon: Bath },
-  { label: "atendimento", icon: Users },
-  { label: "iluminação", icon: Lightbulb },
-  { label: "segurança", icon: ShieldCheck },
-  { label: "troca-fraldas", icon: Baby },
-  { label: "acessibilidade", icon: BadgeCheck },
-  { label: "local seguro à noite", icon: Car }
+/** Busca postos reais do Supabase */
+export async function fetchStations(limit = 20) {
+  const { data, error } = await supabase
+    .from("fuel_stations")
+    .select("*")
+    .eq("status", "active")
+    .order("reputation_score", { ascending: false })
+    .limit(limit);
+  if (error) throw error;
+  return (data || []) as Station[];
+}
+
+/** Contagem real: postos, preços, relatos */
+export async function fetchStats() {
+  const { count: stationCount } = await supabase
+    .from("fuel_stations")
+    .select("*", { count: "exact", head: true })
+    .eq("status", "active");
+
+  const { count: priceCount } = await supabase
+    .from("fuel_prices")
+    .select("*", { count: "exact", head: true });
+
+  const { count: reportCount } = await supabase
+    .from("reports")
+    .select("*", { count: "exact", head: true });
+
+  return {
+    stations: stationCount || 0,
+    prices: priceCount || 0,
+    reports: reportCount || 0,
+  };
+}
+
+/** Média de preço por combustível (dados reais) */
+export async function fetchFuelAverages() {
+  const { data, error } = await supabase
+    .from("regional_fuel_indicators")
+    .select("fuel, average_price, trend, state")
+    .order("collected_at", { ascending: false })
+    .limit(10);
+  if (error) throw error;
+  return data || [];
+}
+
+/** Busca reputação Google Places (opcional, requer Places API key) */
+export async function fetchGoogleReviews(placeId: string) {
+  const key = process.env.GOOGLE_PLACES_API_KEY;
+  if (!key) return { enabled: false, reviews: [] };
+  const res = await fetch(
+    `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,reviews,user_ratings_total&key=${key}&language=pt-BR`
+  );
+  const json = await res.json();
+  return {
+    enabled: true,
+    rating: json.result?.rating,
+    total: json.result?.user_ratings_total,
+    reviews: json.result?.reviews || [],
+  };
+}
+
+/** Indicadores de avaliação (labels apenas — dados vêm do banco) */
+export const ratingLabels = [
+  "combustível confiável",
+  "banheiro limpo",
+  "atendimento",
+  "iluminação",
+  "segurança",
+  "troca-fraldas",
+  "acessibilidade",
+  "local seguro à noite",
 ];
 
-export const safetySignals = [
+export const safetyLabels = [
   "seguro para mulheres",
   "boa iluminação",
   "movimento noturno",
   "banheiro feminino limpo",
   "assédio relatado",
-  "parada segura para viagem"
+  "parada segura para viagem",
 ];
 
-export const familySignals = [
+export const familyLabels = [
   "troca-fraldas",
   "banheiro infantil",
   "acessibilidade",
@@ -119,33 +115,5 @@ export const familySignals = [
   "área de descanso",
   "ducha/caminhoneiro",
   "estacionamento",
-  "calibrador"
-];
-
-export const adminCards = [
-  { label: "denúncias abertas", value: "312", icon: Siren, tone: "danger" },
-  { label: "preços suspeitos", value: "1.204", icon: Droplets, tone: "warning" },
-  { label: "revisões aprovadas", value: "27.901", icon: BadgeCheck, tone: "petrol" },
-  { label: "postos em observação", value: "684", icon: ShieldCheck, tone: "civic" }
-];
-
-export const moderationQueue = [
-  {
-    title: "Possível combustível adulterado",
-    location: "Posto Centro Norte - Goiânia",
-    risk: "alto",
-    evidence: "5 relatos semelhantes em 72h, nota de combustível caiu 31%"
-  },
-  {
-    title: "Assédio relatado no estacionamento",
-    location: "BR-101, km 87 - Recife",
-    risk: "crítico",
-    evidence: "relato anônimo com foto e horário; ocultar identidade publicamente"
-  },
-  {
-    title: "Preço abusivo em feriado",
-    location: "Posto Serra Azul - Dutra",
-    risk: "médio",
-    evidence: "diesel S10 14,2% acima da média regional e histórico local"
-  }
+  "calibrador",
 ];
