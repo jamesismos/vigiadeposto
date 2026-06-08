@@ -2,13 +2,13 @@
 
 **by JAMESYSTEM**
 
-App comunitario gratuito para consultar precos, seguranca e qualidade de postos de combustivel no Brasil.
+App comunitario gratuito para avaliar postos de combustivel: seguranca, estrutura, banheiro, iluminacao, acessibilidade e preco.
 
 ## O Que Faz
 
-- Mostra postos proximos no mapa com precos e reputacao
-- Permite enviar precos e avaliacoes (anonimo ou identificado)
-- Indica seguranca feminina, familia, banheiro, iluminacao, acessibilidade
+- Avalia posto: seguro? Tem banheiro? Trocador? Iluminacao? Acessivel? Preco justo?
+- Mostra postos no mapa com reputacao e indicadores de estrutura
+- Permite enviar avaliacoes e precos (anonimo ou identificado)
 - Modera textos antes de publicar (protecao juridica)
 
 ## Para Quem E

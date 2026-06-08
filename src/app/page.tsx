@@ -93,13 +93,13 @@ export default async function Home() {
           <div className="flex min-h-[560px] flex-col justify-center">
             <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-md border border-white/15 bg-white/10 px-3 py-2 text-sm font-semibold backdrop-blur">
               <Sparkles size={16} className="text-limefuel" />
-              Preco, seguranca e qualidade de postos no Brasil
+              Seguranca, estrutura e preco em todo o Brasil
             </div>
             <h1 className="max-w-4xl text-4xl font-black leading-tight md:text-6xl">
               Vigia de Posto
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/82">
-              Consulte precos, reputacao e seguranca de postos de combustivel. Envie avaliacoes, denuncie problemas. Sem rede social.
+              Avalie o lugar: tem banheiro limpo? E seguro para mulheres? Tem trocador? Iluminacao? Envie precos tambem. Sem rede social.
             </p>
             <div className="mt-8 grid max-w-2xl gap-3 rounded-lg border border-white/15 bg-white/10 p-2 backdrop-blur sm:grid-cols-[1fr_auto]">
               <label className="flex items-center gap-3 rounded-md bg-white px-4 py-3 text-ink">

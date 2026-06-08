@@ -4,9 +4,9 @@ import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Vigia de Posto | Preco, seguranca e qualidade de postos",
+  title: "Vigia de Posto | Avalie seguranca, estrutura e preco de postos",
   description:
-    "Consulte precos, reputacao e seguranca de postos de combustivel no Brasil. Mapa gratuito, anonimo, sem anuncios.",
+    "Posto seguro? Tem banheiro limpo? Trocador? Iluminacao? Avalie postos de combustivel no Brasil. Mapa gratuito, anonimo.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
