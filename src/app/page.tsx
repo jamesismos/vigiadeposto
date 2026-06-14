@@ -29,14 +29,15 @@ export default async function Home() {
   if (!supabaseUrl || !supabaseAnonKey) {
     return (
       <main className="min-h-screen bg-[#f6f8fa] text-ink dark:bg-[#10151f] dark:text-white grid place-items-center px-5">
-        <section className="max-w-md rounded-lg border border-ink/10 bg-white p-6 text-center dark:border-white/10 dark:bg-white/5 shadow-soft">
-          <h1 className="text-2xl font-black text-danger">Configuração Incompleta</h1>
-          <p className="mt-3 text-graphite dark:text-white/70">
-            As variáveis de ambiente do Supabase não foram configuradas no Vercel ou localmente.
+        <section className="max-w-md rounded-lg border border-ink/10 bg-white p-8 text-center dark:border-white/10 dark:bg-white/5 shadow-soft">
+          <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-petrol text-white mb-4">
+            <MapPinned size={26} />
+          </span>
+          <h1 className="text-2xl font-black">Vigia de Posto</h1>
+          <p className="mt-4 text-graphite dark:text-white/80 leading-relaxed">
+            Estamos preparando a plataforma para você. O Vigia de Posto estará no ar em instantes!
           </p>
-          <p className="mt-2 text-xs text-graphite/60 dark:text-white/40">
-            Defina `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-          </p>
+          <div className="mt-6 h-1 w-12 bg-petrol mx-auto rounded" />
         </section>
       </main>
     );

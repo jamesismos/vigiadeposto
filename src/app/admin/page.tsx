@@ -10,13 +10,10 @@ export default async function AdminDashboard() {
   if (!supabaseUrl || !supabaseAnonKey) {
     return (
       <main className="min-h-screen bg-[#f6f8fa] text-ink dark:bg-[#10151f] dark:text-white grid place-items-center px-5">
-        <section className="max-w-md rounded-lg border border-ink/10 bg-white p-6 text-center dark:border-white/10 dark:bg-white/5 shadow-soft">
-          <h1 className="text-2xl font-black text-danger">Configuração Incompleta</h1>
-          <p className="mt-3 text-graphite dark:text-white/70">
-            As variáveis de ambiente do Supabase não foram configuradas no Vercel ou localmente.
-          </p>
-          <p className="mt-2 text-xs text-graphite/60 dark:text-white/40">
-            Defina `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+        <section className="max-w-md rounded-lg border border-ink/10 bg-white p-8 text-center dark:border-white/10 dark:bg-white/5 shadow-soft">
+          <h1 className="text-2xl font-black">Área Restrita</h1>
+          <p className="mt-4 text-graphite dark:text-white/80 leading-relaxed">
+            O painel de moderação está temporariamente indisponível. Por favor, tente novamente mais tarde.
           </p>
         </section>
       </main>
