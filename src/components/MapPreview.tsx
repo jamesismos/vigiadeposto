@@ -8,10 +8,10 @@ import { filters } from "@/lib/data";
 import { createBrowserClient } from "@supabase/ssr";
 
 function createClient() {
-  return createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) return null as any;
+  return createBrowserClient(url, key);
 }
 
 interface Station {

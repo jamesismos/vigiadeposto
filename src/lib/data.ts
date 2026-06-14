@@ -1,9 +1,20 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+let supabaseInstance: ReturnType<typeof createClient> | null = null;
+
+function getSupabase() {
+  if (supabaseInstance) return supabaseInstance;
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!url || !anonKey) {
+    throw new Error("Supabase client is not configured. Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY.");
+  }
+
+  supabaseInstance = createClient(url, anonKey);
+  return supabaseInstance;
+}
 
 export type StationStatus = "recommended" | "cheap" | "expensive" | "alert";
 
@@ -27,7 +38,7 @@ export const filters = ["gasolina", "etanol", "diesel", "gnv", "elétrico"];
 
 /** Busca postos reais do Supabase */
 export async function fetchStations(limit = 20) {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("fuel_stations")
     .select("*")
     .eq("status", "active")
@@ -39,16 +50,16 @@ export async function fetchStations(limit = 20) {
 
 /** Contagem real: postos, preços, relatos */
 export async function fetchStats() {
-  const { count: stationCount } = await supabase
+  const { count: stationCount } = await getSupabase()
     .from("fuel_stations")
     .select("*", { count: "exact", head: true })
     .eq("status", "active");
 
-  const { count: priceCount } = await supabase
+  const { count: priceCount } = await getSupabase()
     .from("fuel_prices")
     .select("*", { count: "exact", head: true });
 
-  const { count: reportCount } = await supabase
+  const { count: reportCount } = await getSupabase()
     .from("reports")
     .select("*", { count: "exact", head: true });
 
@@ -61,7 +72,7 @@ export async function fetchStats() {
 
 /** Média de preço por combustível (dados reais) */
 export async function fetchFuelAverages() {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("regional_fuel_indicators")
     .select("fuel, average_price, trend, state")
     .order("collected_at", { ascending: false })
