@@ -23,10 +23,29 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 export default async function Home() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return (
+      <main className="min-h-screen bg-[#f6f8fa] text-ink dark:bg-[#10151f] dark:text-white grid place-items-center px-5">
+        <section className="max-w-md rounded-lg border border-ink/10 bg-white p-6 text-center dark:border-white/10 dark:bg-white/5 shadow-soft">
+          <h1 className="text-2xl font-black text-danger">Configuração Incompleta</h1>
+          <p className="mt-3 text-graphite dark:text-white/70">
+            As variáveis de ambiente do Supabase não foram configuradas no Vercel ou localmente.
+          </p>
+          <p className="mt-2 text-xs text-graphite/60 dark:text-white/40">
+            Defina `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+          </p>
+        </section>
+      </main>
+    );
+  }
+
   const cookieStore = await cookies();
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll: () => cookieStore.getAll(),
