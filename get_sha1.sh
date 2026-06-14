@@ -4,15 +4,15 @@ echo "🔑 Obtendo SHA-1 do debug keystore..."
 echo ""
 
 # Verificar se o keystore existe
-if [ ! -f "app/debug.keystore" ]; then
-    echo "❌ Erro: app/debug.keystore não encontrado!"
-    echo "Execute primeiro: keytool -genkey -v -keystore app/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname \"CN=Android Debug,O=Android,C=US\""
+if [ ! -f "android/debug.keystore" ]; then
+    echo "❌ Erro: android/debug.keystore não encontrado!"
+    echo "Execute primeiro: keytool -genkey -v -keystore android/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname \"CN=Android Debug,O=Android,C=US\""
     exit 1
 fi
 
 # Tentar obter SHA-1
 echo "📋 Executando keytool..."
-keytool -list -v -keystore app/debug.keystore -alias androiddebugkey -storepass android -keypass android 2>/dev/null
+keytool -list -v -keystore android/debug.keystore -alias androiddebugkey -storepass android -keypass android 2>/dev/null
 
 if [ $? -eq 0 ]; then
     echo ""

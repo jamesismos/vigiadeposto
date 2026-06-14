@@ -20,7 +20,7 @@ Google Sign-in não funciona porque falta configurar OAuth Client ID correto.
 
 ### **3. 📥 Baixar novo google-services.json**
 1. Após adicionar SHA1 → **Download google-services.json**
-2. Substituir o arquivo atual em `app/google-services.json`
+2. Substituir o arquivo atual em `android/google-services.json`
 
 ### **4. 🔍 Obter Web Client ID**
 1. No novo `google-services.json`, procure por:

@@ -154,7 +154,7 @@ adb logcat | grep "TestUtils"
 
 O APK debug será gerado em:
 ```
-app/build/outputs/apk/debug/app-debug.apk
+android/build/outputs/apk/debug/app-debug.apk
 ```
 
 ### 🔍 Verificações Importantes

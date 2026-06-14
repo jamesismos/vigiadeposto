@@ -20,7 +20,7 @@
    - Verifique se não há erros de compilação
 
 3. **Configure as chaves**
-   - **Firebase**: Certifique-se que `google-services.json` está na pasta `app/`
+   - **Firebase**: Certifique-se que `google-services.json` está na pasta `android/`
    - **Google Maps**: Configure `MAPS_API_KEY` no arquivo `local.properties`
 
 4. **Build Debug**
@@ -70,7 +70,7 @@ adb logcat | grep "TestUtils"
 3. Verifique se o SHA-1 está configurado
 
 ### Erro de Firebase
-1. Confirme se `google-services.json` está na pasta `app/`
+1. Confirme se `google-services.json` está na pasta `android/`
 2. Verifique se o package name está correto
 3. Confirme se as dependências estão atualizadas
 
@@ -78,7 +78,7 @@ adb logcat | grep "TestUtils"
 
 O APK debug será gerado em:
 ```
-app/build/outputs/apk/debug/app-debug.apk
+android/build/outputs/apk/debug/app-debug.apk
 ```
 
 ## 🔧 Configurações Finais

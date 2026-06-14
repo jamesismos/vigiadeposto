@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Vigia de Posto"
 include(":app")
+project(":app").projectDir = file("android")

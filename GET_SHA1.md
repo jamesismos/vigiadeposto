@@ -20,7 +20,7 @@
    ```
    Variant: debug
    Config: debug
-   Store: D:\James\Programação\VigiadePosto\app\debug.keystore
+   Store: D:\James\Programação\VigiadePosto\android\debug.keystore
    Alias: androiddebugkey
    MD5: XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX
    SHA1: XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX
@@ -32,7 +32,7 @@
 ## Método 2: Via Terminal (se keytool estiver disponível)
 
 ```bash
-keytool -list -v -keystore app/debug.keystore -alias androiddebugkey -storepass android -keypass android
+keytool -list -v -keystore android/debug.keystore -alias androiddebugkey -storepass android -keypass android
 ```
 
 ## 🔧 Configurando no Firebase

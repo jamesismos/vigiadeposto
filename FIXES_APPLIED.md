@@ -51,7 +51,7 @@ plugins {
 }
 ```
 
-### **2. app/build.gradle.kts - CORRIGIDO**
+### **2. android/build.gradle.kts - CORRIGIDO**
 ```kotlin
 // ANTES (com erro):
 defaultConfig {
@@ -105,7 +105,7 @@ distributionUrl=https\://services.gradle.org/distributions/gradle-9.0-milestone-
 distributionUrl=https\://services.gradle.org/distributions/gradle-8.4-bin.zip
 ```
 
-### **4. app/build.gradle.kts - COMPOSE VERSION**
+### **4. android/build.gradle.kts - COMPOSE VERSION**
 ```kotlin
 // ANTES:
 composeOptions {
@@ -124,7 +124,7 @@ composeOptions {
 android.overridePathCheck=true
 ```
 
-### **6. app/build.gradle.kts - SIGNING CONFIG FIXED**
+### **6. android/build.gradle.kts - SIGNING CONFIG FIXED**
 ```kotlin
 // ANTES (com erro):
 signingConfigs {
@@ -174,7 +174,7 @@ release {
 ./gradlew --stop
 rm -rf .gradle
 rm -rf build
-rm -rf app/build
+rm -rf android/build
 
 # Limpar cache global do Gradle (Windows):
 rmdir /s /q %USERPROFILE%\.gradle\caches

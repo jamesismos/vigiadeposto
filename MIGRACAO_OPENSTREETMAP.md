@@ -3,7 +3,7 @@
 ## ✅ MUDANÇAS IMPLEMENTADAS
 
 ### 🗺️ **1. Novo Serviço Gratuito Criado**
-- **Arquivo**: `app/src/main/java/br/com/vigiadeposto/data/service/OpenStreetMapService.kt`
+- **Arquivo**: `android/src/main/java/br/com/vigiadeposto/data/service/OpenStreetMapService.kt`
 - **Função**: Busca postos reais usando Overpass API (100% gratuito)
 - **Características**:
   - Dados reais do OpenStreetMap
