@@ -14,7 +14,7 @@
     "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.6.3",
     "lucide-react": "^0.468.0",
-    "maplibre-gl": "^5.4.0",
+    "maplibre-gl": "^6.4.1",
     "next": "^15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
